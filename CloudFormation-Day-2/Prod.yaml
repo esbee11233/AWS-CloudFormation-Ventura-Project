@@ -1,0 +1,100 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: This template provisions the VenturaVPC Network Infrastructure
+Metadata: {}
+Parameters: {}
+Mappings: {}
+Conditions: {}
+Resources:
+  ProdVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      Tags:
+      - Key: Name
+        Value: VenturaVPC
+  VenturaProdNATALBSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: us-east-1a
+      VpcId: ProdVPC
+      CidrBlock: 10.0.1.0/28
+      Tags:
+        - Key: Name
+          Value: Ventura-Prod-NAT-ALB-Subnet-1 
+  VenturaProdALBSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: us-east-1b
+      VpcId: ProdVPC
+      CidrBlock: 10.0.3.0/28
+      Tags:
+        - Key: Name
+          Value: Ventura-Prod-ALB-Subnet-2
+  VenturaProdWebSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: us-east-1a
+      VpcId: ProdVPC
+      CidrBlock: 10.0.5.0/23
+      Tags:
+        - Key: Name
+          Value: Ventura-Prod-Web-Subnet-1
+  VenturaProdWebSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: us-east-1b
+      VpcId: ProdVPC
+      CidrBlock: 10.0.10.0/23
+      Tags:
+        - Key: Name
+          Value: Ventura-Prod-Web-Subnet2
+  VenturaProdAppSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: us-east-1a
+      VpcId: ProdVPC
+      CidrBlock: 10.0.15.0/23
+      Tags:
+        - Key: Name
+          Value: Ventura-Prod-App-Subnet-1
+  VenturaProdAppSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: us-east-1b
+      VpcId: ProdVPC
+      CidrBlock: 10.0.20.0/23
+      Tags:
+        - Key: Name
+          Value: Ventura-Prod-App-Subnet-2
+  VenturaProdDBSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: us-east-1a
+      VpcId: ProdVPC
+      CidrBlock: 10.0.25.0/27
+      Tags:
+        - Key: Name
+          Value: Ventura-Prod-DB-Subnet-1
+  VenturaProdDBSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: us-east-1b
+      VpcId: ProdVPC
+      CidrBlock: 10.0.30.0/27
+      Tags:
+        - Key: Name
+          Value: Ventura-Prod-DB-Subnet-2
+  VenturaProdIGW:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: Prod-IGW
+  AttachGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: ProdVPC
+      InternetGatewayId: 
+        Ref: VenturaProdIGW  
+Outputs: {}
